@@ -6,6 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "test.my.mytest.MESSAGE";
 
@@ -19,8 +26,39 @@ public class MainActivity extends AppCompatActivity {
     public void sendMessage (View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
+        String message;
+        try {
+             message = editText.getText().toString();
+        } catch (Exception e) {
+            message = e.getStackTrace().toString();
+        }
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
+    }
+
+    public void sendJsonRequest () {
+        final Intent intent = new Intent(this, DisplayMessageActivity.class);
+        String url = "https://api.ipify.org/?format=json";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        intent.putExtra(EXTRA_MESSAGE, response.toString());
+                        startActivity(intent);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        intent.putExtra(EXTRA_MESSAGE, error.toString());
+                        startActivity(intent);
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        HTTPRequestQueueSingleton.getInstance(this).addToRequestQueue(jsObjRequest);
     }
 }
