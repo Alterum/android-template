@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendJsonRequest (View view) {
         final Intent intent = new Intent(this, DisplayMessageActivity.class);
-        String url = "https://api.ipify.org/?format=json";
+        String url = "http://jklab.cf:33666/";
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
