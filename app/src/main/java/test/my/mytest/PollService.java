@@ -27,7 +27,7 @@ public class PollService extends IntentService {
         super(TAG);
     }
 
-    public void startGetQuestInfo(Context context, final String extraResponseKey) {
+    public static void startGetQuestInfo(Context context, final String extraResponseKey) {
         Intent intent = new Intent(context, PollService.class);
         intent.setAction(ACTION_QUEST_INFO);
         intent.putExtra(EXTRA_1, extraResponseKey);
