@@ -61,4 +61,9 @@ public class MainActivity extends AppCompatActivity {
         // Access the RequestQueue through your singleton class.
         HTTPRequestQueueSingleton.getInstance(this).addToRequestQueue(jsObjRequest);
     }
+
+    public void startIntentService (View view) {
+        PollService intentService = new PollService();
+        intentService.startGetQuestInfo(this, EXTRA_MESSAGE);
+    }
 }
