@@ -63,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startIntentService (View view) {
-        PollService.startGetQuestInfo(this, EXTRA_MESSAGE);
+        Intent intent = new Intent(this, PollService.class);
+        startService(intent);
+        // PollService.startGetQuestInfo(this, EXTRA_MESSAGE);
     }
 }
